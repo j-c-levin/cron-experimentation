@@ -1,0 +1,25 @@
+{
+  "name": "cron-experimentation",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/j-c-levin/cron-experimentation.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/j-c-levin/cron-experimentation/issues"
+  },
+  "homepage": "https://github.com/j-c-levin/cron-experimentation#readme",
+  "devDependencies": {
+    "nodemon": "^1.17.5",
+    "ts-node": "^6.1.1",
+    "typescript": "^2.9.2"
+  }
+}
