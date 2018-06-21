@@ -1,4 +1,5 @@
 import { Matcher, MatcherProperties } from '../interfaces';
+import { StepMatcher } from './stepMatcher';
 
 const index = {
     start: 0,
@@ -31,17 +32,13 @@ export class RangeMatcher implements Matcher {
         }
         const values = value.split('-');
         // Check for step value
-        if (values[index.end].includes('/')) {
-            // Split and save the step range
-            const temp = values[index.end].split('/');
-            // Check range is a whole number
-            if (isNaN(Number(temp[index.end])) || temp[index.end].includes('.')) {
-                throw new Error(`/step value in ${value} is not a valid integer`);
+        const stepResponse = StepMatcher.parse(values[index.end]);
+        if (stepResponse.hasStep) {
+            if (typeof stepResponse.mainValue === 'undefined' || typeof stepResponse.stepValue === 'undefined') {
+                throw new Error(`Step response for ${values[index.end]} is true but there is no main or step value, this is a developer error`);
             }
-            // Save the step into the matcher properties
-            this.properties.step = Number(temp[index.end]);
-            // Overwrite the range end
-            values[index.end] = temp[index.start];
+            this.properties.step = stepResponse.stepValue;
+            values[index.end] = stepResponse.mainValue;
         }
         // Standard number checks
         values.forEach(element => {

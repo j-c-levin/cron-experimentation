@@ -2,7 +2,7 @@ import { MinuteParser } from './parsers/minuteParser';
 // ask for input
 
 // send to parser
-const m = new MinuteParser('10/59');
+const m = new MinuteParser('55-*/1');
 
 // print out result
 for (let i = 0; i < 60; i++) {
