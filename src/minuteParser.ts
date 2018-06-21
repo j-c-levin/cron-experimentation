@@ -1,46 +1,64 @@
-export class MinuteParser {
-    maxValue = 59;
-    minValue = 0;
-    value: string | null = null;
+import { NumberMatcher } from './matchers/numberMatcher';
+import { Matcher, Parser } from './interfaces';
+import { AnyMatcher } from './matchers/anyMatcher';
+import { NoMatcher } from './matchers/noMatcher';
+import { RangeMatcher } from './matchers/rangeMatcher';
+
+export class MinuteParser implements Parser {
+    properties = {
+        maxValue: 59,
+        minValue: 0
+    }
+    value: Matcher = new NoMatcher();
+    children: Parser[] = [];
 
     constructor(input: string) {
         this.splitDataString(input);
     }
-    todo
-    // create an interface for all data type classes that can handle 'matches' and this is stored in the minute parser and this is what is called to validate a match
+
+    match(input: Number): boolean {
+
+        if (this.value === null) {
+            throw new Error(`Trying to match a minute input which is null`);
+        }
+        return this.value.match(input) || this.children.some(child => child.match(input));
+    }
+
     splitDataString(input: string): void {
 
-        // Input is a range, ....
+        // Input is a list, must check this first for recursion to work
+        if (input.includes(',')) {
+            // Split into elements
+            const list = input.split(',');
+            // Create new Parsers recursively with the individual elements
+            list.forEach(element => {
+                this.children.push(new MinuteParser(element));
+            });
+            return;
+        }
+
+        // Input is a range
+        const rangeMatcher = new RangeMatcher(this.properties);
+        if (rangeMatcher.isValid(input)) {
+            this.value = rangeMatcher;
+            return;
+        }
 
         // Input as an asterix, matches with any value
-        if (input === '*') {
-            this.value = input;
+        const anyMatcher = new AnyMatcher();
+        if (anyMatcher.isValid(input)) {
+            this.value = anyMatcher;
             return;
         }
 
         // Input is a raw number, matches with specific value
-        if (this.isValidNumber(input)) {
-            this.value = input;
+        const numberMatcher = new NumberMatcher(this.properties);
+        if (numberMatcher.isValid(input)) {
+            this.value = numberMatcher;
             return;
         }
 
         // Input matches no known type, throw error
         throw new Error(`Input ${input} as a minute does not match any known type`);
-    }
-
-    isValidNumber(input: string): boolean {
-        // Input does not parse to a number
-        if (isNaN(Number(input))) {
-            return false;
-        }
-        // Input is not in a valid range
-        if (Number(input) < this.minValue || Number(input) > this.maxValue) {
-            throw new Error(`Value ${input} as a minute is out of the range of ${this.minValue} to ${this.maxValue}`);
-        }
-        // Input is not an integer
-        if (input.includes('.')) {
-            throw new Error(`Value ${input} as a minute is not a whole number between ${this.minValue} and ${this.maxValue}`);
-        }
-        return true;
     }
 }
