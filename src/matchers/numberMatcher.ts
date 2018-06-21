@@ -1,5 +1,10 @@
 import { Matcher, MatcherProperties } from "../interfaces";
 
+const index = {
+    start: 0,
+    end: 1
+}
+
 export class NumberMatcher implements Matcher {
     properties: MatcherProperties
     value: number | null = null;

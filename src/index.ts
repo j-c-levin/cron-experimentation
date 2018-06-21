@@ -1,8 +1,8 @@
-import { MinuteParser } from './minuteParser';
+import { MinuteParser } from './parsers/minuteParser';
 // ask for input
 
 // send to parser
-const m = new MinuteParser('0-10/9');
+const m = new MinuteParser('10/59');
 
 // print out result
 for (let i = 0; i < 60; i++) {

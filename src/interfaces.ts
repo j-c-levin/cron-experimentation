@@ -1,9 +1,9 @@
 export interface Matcher {
-    match(value: number): boolean;
-    isValid(value: string): boolean;
+    match(input: number): boolean;
+    isValid(input: string): boolean;
 }
 export interface Parser {
-    match(value: number): boolean;
+    match(input: number): boolean;
 }
 export interface MatcherProperties {
     minValue: number;

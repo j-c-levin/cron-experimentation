@@ -1,13 +1,13 @@
-import { NumberMatcher } from './matchers/numberMatcher';
-import { Matcher, Parser, MatcherProperties } from './interfaces';
-import { AnyMatcher } from './matchers/anyMatcher';
-import { NoMatcher } from './matchers/noMatcher';
-import { RangeMatcher } from './matchers/rangeMatcher';
+import { Matcher, MatcherProperties, Parser } from '../interfaces';
+import { AnyMatcher } from '../matchers/anyMatcher';
+import { NoMatcher } from '../matchers/noMatcher';
+import { NumberMatcher } from '../matchers/numberMatcher';
+import { RangeMatcher } from '../matchers/rangeMatcher';
 
 export class MinuteParser implements Parser {
     properties: MatcherProperties = {
         maxValue: 59,
-        minValue: 0
+        minValue: 1
     }
     value: Matcher = new NoMatcher();
     children: Parser[] = [];

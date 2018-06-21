@@ -45,6 +45,12 @@ export class RangeMatcher implements Matcher {
         }
         // Standard number checks
         values.forEach(element => {
+            // Input is an 'any' symbol, map to max/min value
+            if (element === '*') {
+                const position = (element === values[index.start]) ? index.start : index.end;
+                element = (position === index.start) ? this.properties.minValue.toString() : this.properties.maxValue.toString();
+                values[position] = element;
+            }
             // Input does not parse to a number
             if (isNaN(Number(element))) {
                 return false;
@@ -57,6 +63,7 @@ export class RangeMatcher implements Matcher {
             if (element.includes('.')) {
                 throw new Error(`Value ${element} as a range is not a whole number between ${this.properties.minValue} and ${this.properties.maxValue}`);
             }
+            return true;
         });
         // Check start is before end
         if (Number(values[index.start]) >= Number(values[index.end])) {
