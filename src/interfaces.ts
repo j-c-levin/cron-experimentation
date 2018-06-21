@@ -8,4 +8,5 @@ export interface Parser {
 export interface MatcherProperties {
     minValue: Number;
     maxValue: Number;
+    step?: Number
 }
