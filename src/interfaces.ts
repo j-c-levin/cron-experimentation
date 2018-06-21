@@ -1,12 +1,12 @@
 export interface Matcher {
-    match(value: Number): boolean;
+    match(value: number): boolean;
     isValid(value: string): boolean;
 }
 export interface Parser {
-    match(value: Number): boolean;
+    match(value: number): boolean;
 }
 export interface MatcherProperties {
-    minValue: Number;
-    maxValue: Number;
-    step?: Number
+    minValue: number;
+    maxValue: number;
+    step?: number;
 }

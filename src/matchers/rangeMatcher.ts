@@ -7,15 +7,19 @@ const index = {
 
 export class RangeMatcher implements Matcher {
     properties: MatcherProperties
-    range: { start: Number, end: Number } | null = null;
+    range: { start: number, end: number } | null = null;
 
     constructor(properties: MatcherProperties) {
         this.properties = properties;
     }
 
-    match(value: Number): boolean {
+    match(value: number): boolean {
         if (this.range === null) {
             throw new Error('Attempting to match range without setting using isValid first');
+        }
+        // If there is a step, match against that
+        if (typeof this.properties.step !== 'undefined' && value % this.properties.step !== 0) {
+            return false;
         }
         return value >= this.range.start && value <= this.range.end;
     }
@@ -26,6 +30,19 @@ export class RangeMatcher implements Matcher {
             return false;
         }
         const values = value.split('-');
+        // Check for step value
+        if (values[index.end].includes('/')) {
+            // Split and save the step range
+            const temp = values[index.end].split('/');
+            // Check range is a whole number
+            if (isNaN(Number(temp[index.end])) || temp[index.end].includes('.')) {
+                throw new Error(`/step value in ${value} is not a valid integer`);
+            }
+            // Save the step into the matcher properties
+            this.properties.step = Number(temp[index.end]);
+            // Overwrite the range end
+            values[index.end] = temp[index.start];
+        }
         // Standard number checks
         values.forEach(element => {
             // Input does not parse to a number

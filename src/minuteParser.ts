@@ -16,7 +16,7 @@ export class MinuteParser implements Parser {
         this.splitDataString(input);
     }
 
-    match(input: Number): boolean {
+    match(input: number): boolean {
 
         if (this.value === null) {
             throw new Error(`Trying to match a minute input which is null`);
