@@ -1,11 +1,11 @@
 import { NumberMatcher } from './matchers/numberMatcher';
-import { Matcher, Parser } from './interfaces';
+import { Matcher, Parser, MatcherProperties } from './interfaces';
 import { AnyMatcher } from './matchers/anyMatcher';
 import { NoMatcher } from './matchers/noMatcher';
 import { RangeMatcher } from './matchers/rangeMatcher';
 
 export class MinuteParser implements Parser {
-    properties = {
+    properties: MatcherProperties = {
         maxValue: 59,
         minValue: 0
     }
