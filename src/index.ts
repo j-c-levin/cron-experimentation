@@ -13,11 +13,12 @@ const index = {
     dayOfWeek: 6,
     command: 7
 };
+const maxParserNumber = 60;
 
-// ask for input
+// Ask for input
 const args = process.argv;
 
-// send to parser
+// Send to parser
 const parsers = [
     new MinuteParser(args[index.minute]),
     new HourParser(args[index.hour]),
@@ -26,14 +27,15 @@ const parsers = [
     new DayOfWeekParser(args[index.dayOfWeek])
 ];
 
-// print out result
+// Print out result
 parsers.forEach(parser => {
     let message = parser.name;
-    for (let i = 0; i < 60; i++) {
+    for (let i = 0; i < maxParserNumber; i++) {
         if (parser.match(i)) {
             message += ` ${i}`;
         }
     }
     console.log(message);
 });
+// Print out the command at the end
 new CommandParser(args, index.command).printCommand();
