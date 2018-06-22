@@ -1,7 +1,6 @@
 # cron-experimentation
 
 todo:
-need an hour matcher
 need a day of month matcher 
 need a month matcher
 need a day of week matcher
