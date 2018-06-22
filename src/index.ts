@@ -5,6 +5,7 @@ import { MonthParser } from './parsers/monthParser';
 import { DayOfWeekParser } from './parsers/dayOfWeekParser';
 import { CommandParser } from './parsers/commandParser';
 
+const maxParserNumber = 60;
 const index = {
     minute: 2,
     hour: 3,
@@ -13,7 +14,6 @@ const index = {
     dayOfWeek: 6,
     command: 7
 };
-const maxParserNumber = 60;
 
 // Ask for input
 const args = process.argv;
@@ -37,5 +37,6 @@ parsers.forEach(parser => {
     }
     console.log(message);
 });
+
 // Print out the command at the end
 new CommandParser(args, index.command).printCommand();

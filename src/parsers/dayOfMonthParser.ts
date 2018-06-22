@@ -10,22 +10,14 @@ export class DayOfMonthParser implements Parser {
         maxValue: 31
     }
     name = 'day of month ';
-    value: Matcher = new NoMatcher();
+    value: Matcher;
     children: Parser[] = [];
 
     constructor(input: string) {
-        this.splitDataString(input);
+        this.value = this.splitDataString(input);
     }
 
-    match(input: number): boolean {
-
-        if (this.value === null) {
-            throw new Error(`Trying to match a minute input which is null`);
-        }
-        return this.value.match(input) || this.children.some(child => child.match(input));
-    }
-
-    splitDataString(input: string): void {
+    splitDataString(input: string): Matcher {
 
         // Input is a list, must check this first for recursion to work
         if (input.includes(',')) {
@@ -35,31 +27,34 @@ export class DayOfMonthParser implements Parser {
             list.forEach(element => {
                 this.children.push(new DayOfMonthParser(element));
             });
-            return;
+            // Matching will be handled by the children
+            return new NoMatcher();
         }
 
         // Input is a range
         const rangeMatcher = new RangeMatcher(this.properties);
         if (rangeMatcher.isValid(input)) {
-            this.value = rangeMatcher;
-            return;
+            return rangeMatcher;
         }
 
         // Input as an asterix, matches with any value
         const anyMatcher = new AnyMatcher(this.properties);
         if (anyMatcher.isValid(input)) {
-            this.value = anyMatcher;
-            return;
+            return anyMatcher;
         }
 
         // Input is a raw number, matches with specific value
         const numberMatcher = new NumberMatcher(this.properties);
         if (numberMatcher.isValid(input)) {
-            this.value = numberMatcher;
-            return;
+            return numberMatcher;
         }
 
         // Input matches no known type, throw error
-        throw new Error(`Input ${input} as a minute does not match any known type`);
+        throw new Error(`Input ${input} as a day of month does not match any known type`);
+    }
+
+    // Match either in this object or in any child objects
+    match(input: number): boolean {
+        return this.value.match(input) || this.children.some(child => child.match(input));
     }
 }
