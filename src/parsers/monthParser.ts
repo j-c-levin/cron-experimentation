@@ -4,7 +4,7 @@ import { NoMatcher } from '../matchers/noMatcher';
 import { NumberMatcher } from '../matchers/numberMatcher';
 import { RangeMatcher } from '../matchers/rangeMatcher';
 
-const months = {
+const months: { [month: string]: string } = {
     jan: '1',
     feb: '2',
     mar: '3',
@@ -88,13 +88,13 @@ export class MonthParser implements Parser {
             });
             return split.join('-');
         }
-        // Is input a number
-        if (isNaN(Number(input)) === false) {
-            // Input is a number, doesn't need to be parser
+        // Is input a number or any
+        if (isNaN(Number(input)) === false || input.includes('*')) {
+            // Input is a number or any, doesn't need to be parser
             return input;
         }
         // Input is a string, check if it matches
-        const conversion = months[input.toLowerCase()];
+        const conversion = (input.includes('/')) ? `${months[input.split('/')[0].toLowerCase()]}/${input.split('/')[1]}` : months[input.toLowerCase()]
         if (typeof conversion === 'undefined') {
             throw new Error(`Month input ${input} does not match to a known month`);
         }
