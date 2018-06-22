@@ -6,8 +6,8 @@ import { RangeMatcher } from '../matchers/rangeMatcher';
 
 export class MinuteParser implements Parser {
     properties: MatcherProperties = {
-        maxValue: 59,
-        minValue: 0
+        minValue: 0,
+        maxValue: 59
     }
     value: Matcher = new NoMatcher();
     children: Parser[] = [];

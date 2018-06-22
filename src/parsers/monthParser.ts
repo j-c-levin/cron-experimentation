@@ -4,10 +4,25 @@ import { NoMatcher } from '../matchers/noMatcher';
 import { NumberMatcher } from '../matchers/numberMatcher';
 import { RangeMatcher } from '../matchers/rangeMatcher';
 
-export class DayOfMonthParser implements Parser {
+const months = {
+    jan: '1',
+    feb: '2',
+    mar: '3',
+    apr: '4',
+    may: '5',
+    jun: '6',
+    jul: '7',
+    aug: '8',
+    sep: '9',
+    oct: '10',
+    nov: '11',
+    dec: '12'
+}
+
+export class MonthParser implements Parser {
     properties: MatcherProperties = {
         minValue: 1,
-        maxValue: 31
+        maxValue: 12
     }
     value: Matcher = new NoMatcher();
     children: Parser[] = [];
@@ -32,10 +47,13 @@ export class DayOfMonthParser implements Parser {
             const list = input.split(',');
             // Create new Parsers recursively with the individual elements
             list.forEach(element => {
-                this.children.push(new DayOfMonthParser(element));
+                this.children.push(new MonthParser(element));
             });
             return;
         }
+
+        // Parse days into numbers
+        input = this.parseMonthString(input);
 
         // Input is a range
         const rangeMatcher = new RangeMatcher(this.properties);
@@ -60,5 +78,26 @@ export class DayOfMonthParser implements Parser {
 
         // Input matches no known type, throw error
         throw new Error(`Input ${input} as a minute does not match any known type`);
+    }
+
+    parseMonthString(input: string): string {
+        // If input is a range, deal with each side separately
+        if (input.includes('-')) {
+            const split = input.split('-').map(half => {
+                return this.parseMonthString(half);
+            });
+            return split.join('-');
+        }
+        // Is input a number
+        if (isNaN(Number(input)) === false) {
+            // Input is a number, doesn't need to be parser
+            return input;
+        }
+        // Input is a string, check if it matches
+        const conversion = months[input.toLowerCase()];
+        if (typeof conversion === 'undefined') {
+            throw new Error(`Month input ${input} does not match to a known month`);
+        }
+        return conversion;
     }
 }

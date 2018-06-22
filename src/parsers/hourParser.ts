@@ -6,8 +6,8 @@ import { RangeMatcher } from '../matchers/rangeMatcher';
 
 export class HourParser implements Parser {
     properties: MatcherProperties = {
-        maxValue: 23,
-        minValue: 0
+        minValue: 0,
+        maxValue: 23
     }
     value: Matcher = new NoMatcher();
     children: Parser[] = [];
