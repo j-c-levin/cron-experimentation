@@ -4,9 +4,9 @@ import { NoMatcher } from '../matchers/noMatcher';
 import { NumberMatcher } from '../matchers/numberMatcher';
 import { RangeMatcher } from '../matchers/rangeMatcher';
 
-export class MinuteParser implements Parser {
+export class HourParser implements Parser {
     properties: MatcherProperties = {
-        maxValue: 59,
+        maxValue: 23,
         minValue: 0
     }
     value: Matcher = new NoMatcher();
@@ -32,7 +32,7 @@ export class MinuteParser implements Parser {
             const list = input.split(',');
             // Create new Parsers recursively with the individual elements
             list.forEach(element => {
-                this.children.push(new MinuteParser(element));
+                this.children.push(new HourParser(element));
             });
             return;
         }

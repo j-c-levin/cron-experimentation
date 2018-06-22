@@ -9,12 +9,17 @@ const index = {
 export class AnyMatcher implements Matcher {
     properties: MatcherProperties;
 
-    constructor() {
-        this.properties = { minValue: -1, maxValue: -1 };
+    constructor(properties: MatcherProperties) {
+        this.properties = properties;
     }
 
     match(input: number): boolean {
-        return (typeof this.properties.step !== 'undefined') ? input % this.properties.step === 0 : true;
+        let step = true;
+        if (typeof this.properties.step !== 'undefined') {
+            step = input % this.properties.step === 0;
+        }
+        const match = input >= this.properties.minValue && input <= this.properties.maxValue;
+        return match && step;
     }
 
     isValid(input: string): boolean {
