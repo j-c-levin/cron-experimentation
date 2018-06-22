@@ -9,6 +9,7 @@ export class HourParser implements Parser {
         minValue: 0,
         maxValue: 23
     }
+    name = 'hour         ';
     value: Matcher = new NoMatcher();
     children: Parser[] = [];
 

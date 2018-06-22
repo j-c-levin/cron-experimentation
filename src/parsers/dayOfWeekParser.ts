@@ -19,6 +19,7 @@ export class DayOfWeekParser implements Parser {
         minValue: 0,
         maxValue: 7
     }
+    name = 'day of week  ';
     value: Matcher = new NoMatcher();
     children: Parser[] = [];
 

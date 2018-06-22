@@ -3,6 +3,7 @@ export interface Matcher {
     isValid(input: string): boolean;
 }
 export interface Parser {
+    name: string;
     match(input: number): boolean;
 }
 export interface MatcherProperties {

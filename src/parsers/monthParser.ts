@@ -24,6 +24,7 @@ export class MonthParser implements Parser {
         minValue: 1,
         maxValue: 12
     }
+    name = 'month        ';
     value: Matcher = new NoMatcher();
     children: Parser[] = [];
 

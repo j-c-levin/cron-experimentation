@@ -9,6 +9,7 @@ export class DayOfMonthParser implements Parser {
         minValue: 1,
         maxValue: 31
     }
+    name = 'day of month ';
     value: Matcher = new NoMatcher();
     children: Parser[] = [];
 
