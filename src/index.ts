@@ -3,7 +3,9 @@ import { HourParser } from './parsers/hourParser';
 import { DayOfMonthParser } from './parsers/dayOfMonthParser';
 import { MonthParser } from './parsers/monthParser';
 import { DayOfWeekParser } from './parsers/dayOfWeekParser';
+
 // ask for input
+console.log(process.argv);
 
 // send to parser
 const m = new DayOfWeekParser('sun-3/2');
