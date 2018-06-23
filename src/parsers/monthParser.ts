@@ -16,30 +16,35 @@ const months: { [month: string]: string } = {
     sep: '9',
     oct: '10',
     nov: '11',
-    dec: '12'
-}
+    dec: '12',
+};
 
 export class MonthParser implements Parser {
-    properties: MatcherProperties = {
+    public name = 'month        ';
+    private properties: MatcherProperties = {
         minValue: 1,
-        maxValue: 12
-    }
-    name = 'month        ';
-    value: Matcher = new NoMatcher();
-    children: Parser[] = [];
+        maxValue: 12,
+    };
+    private value: Matcher = new NoMatcher();
+    private children: Parser[] = [];
 
     constructor(input: string) {
         this.value = this.splitDataString(input);
     }
 
-    splitDataString(input: string): Matcher {
+    // Match either in this object or in any child objects
+    public match(input: number): boolean {
+        return this.value.match(input) || this.children.some((child) => child.match(input));
+    }
+
+    private splitDataString(input: string): Matcher {
 
         // Input is a list, must check this first for recursion to work
         if (input.includes(',')) {
             // Split into elements
             const list = input.split(',');
             // Create new Parsers recursively with the individual elements
-            list.forEach(element => {
+            list.forEach((element) => {
                 this.children.push(new MonthParser(element));
             });
             return new NoMatcher();
@@ -70,10 +75,10 @@ export class MonthParser implements Parser {
         throw new Error(`Input ${input} as a month does not match any known type`);
     }
 
-    parseMonthString(input: string): string {
+    private parseMonthString(input: string): string {
         // If input is a range, deal with each side separately
         if (input.includes('-')) {
-            const split = input.split('-').map(half => {
+            const split = input.split('-').map((half) => {
                 return this.parseMonthString(half);
             });
             return split.join('-');
@@ -84,15 +89,10 @@ export class MonthParser implements Parser {
             return input;
         }
         // Input is a string, check if it matches
-        const conversion = (input.includes('/')) ? `${months[input.split('/')[0].toLowerCase()]}/${input.split('/')[1]}` : months[input.toLowerCase()]
+        const conversion = (input.includes('/')) ? `${months[input.split('/')[0].toLowerCase()]}/${input.split('/')[1]}` : months[input.toLowerCase()];
         if (typeof conversion === 'undefined') {
             throw new Error(`Month input ${input} does not match to a known month`);
         }
         return conversion;
-    }
-
-    // Match either in this object or in any child objects
-    match(input: number): boolean {
-        return this.value.match(input) || this.children.some(child => child.match(input));
     }
 }
