@@ -6,6 +6,16 @@ Building a flexible parser for a cron input string
 |---|---|
 | [![CircleCI](https://circleci.com/gh/j-c-levin/cron-experimentation/tree/master.svg?style=svg)](https://circleci.com/gh/j-c-levin/cron-experimentation/tree/master)  |  [![CircleCI](https://circleci.com/gh/j-c-levin/cron-experimentation/tree/develop.svg?style=svg)](https://circleci.com/gh/j-c-levin/cron-experimentation/tree/develop) |
 
+# Parser scope
+
+This parser implements all the basic inputs for a cron format following the linux specification:
+
+http://man7.org/linux/man-pages/man5/crontab.5.html
+
+### Future work
+
+* Handle ```@yearly``` or other shorthand commands
+
 # Installing
 1) Download node
 
@@ -22,6 +32,8 @@ Building a flexible parser for a cron input string
 1) Navigate into the project directory in the command prompt or terminal
 
 2) Run the parser with a cron string
+
+* The format is ```npm run start [minute] [hour] [day-of-month] [month] [day-of-week] [command]```
 
 * ```npm run start */15 0 1,15 * 1-fri /usr/bin/find```
 
