@@ -26,3 +26,23 @@ Building a flexible parser for a cron input string
 * ```npm run start */15 0 1,15 * 1-fri /usr/bin/find```
 
 ![Example Output](https://i.imgur.com/AgNyjd3.png "An image of a command prompt window displaying a successfully parsed cron string")
+
+3) Optionally, run the parser in watch mode
+
+* ```npm run start:watch */15 0 1,15 * 1-fri /usr/bin/find```
+
+![Example Output In Watch Mode](https://i.imgur.com/es1uMQn.png "An image of a command prompt window running the cron parser in watch mode")
+
+# Testing
+
+1) Navigate into the project directory in the command prompt or terminal
+
+2) Run the tests
+
+* ```npm run test```
+
+![Example Test Output](https://i.imgur.com/bNHIAUj.png "An image of a command prompt window running the tests")
+
+3) Optionally,you can run the tests in watch mode
+
+* ```npm run test:watch```
