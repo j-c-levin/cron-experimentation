@@ -1,16 +1,16 @@
 const index = {
     start: 0,
-    end: 1
-}
+    end: 1,
+};
 
-export interface StepResponse {
+export interface IStepResponse {
     hasStep: boolean;
     stepValue?: number;
     mainValue?: string;
 }
 
 export class StepMatcher {
-    static parse(input: string): StepResponse {
+    public static parse(input: string): IStepResponse {
         if (input.includes('/') === false) {
             return { hasStep: false };
         }

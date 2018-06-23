@@ -3,34 +3,26 @@ import { StepMatcher } from './stepMatcher';
 
 const index = {
     start: 0,
-    end: 1
-}
+    end: 1,
+};
 
 export class RangeMatcher implements Matcher {
-    properties: MatcherProperties
-    range: { start: number, end: number } | null = null;
+    private properties: MatcherProperties;
+    private range: { start: number, end: number } | null = null;
 
     constructor(properties: MatcherProperties) {
         this.properties = properties;
     }
 
-    match(value: number): boolean {
-        if (this.range === null) {
-            throw new Error('Attempting to match range without setting using isValid first');
-        }
-        // If there is a step, match against that
-        if (typeof this.properties.step !== 'undefined' && value % this.properties.step !== 0) {
-            return false;
-        }
-        return value >= this.range.start && value <= this.range.end;
-    }
-
-    isValid(value: string): boolean {
+    public isValid(value: string): boolean {
         // Range must include a hyphen
         if (value.includes('-') === false) {
             return false;
         }
         const values = value.split('-');
+        if (values.length > 2) {
+            throw new Error(`Invalid range ${value}, there must not be any negative numbers`);
+        }
         // Check for step value
         const stepResponse = StepMatcher.parse(values[index.end]);
         if (stepResponse.hasStep) {
@@ -41,7 +33,7 @@ export class RangeMatcher implements Matcher {
             values[index.end] = stepResponse.mainValue;
         }
         // Standard number checks
-        values.forEach(element => {
+        values.forEach((element) => {
             // Input is an 'any' symbol, map to max/min value
             if (element === '*') {
                 const position = (element === values[index.start]) ? index.start : index.end;
@@ -50,7 +42,7 @@ export class RangeMatcher implements Matcher {
             }
             // Input does not parse to a number
             if (isNaN(Number(element))) {
-                return false;
+                throw new Error(`Invalid range element ${element} in ${value}`);
             }
             // Input is not in a valid range
             if (Number(element) < this.properties.minValue || Number(element) > this.properties.maxValue) {
@@ -69,10 +61,19 @@ export class RangeMatcher implements Matcher {
         // Save to the range member variable
         this.range = {
             start: Number(values[index.start]),
-            end: Number(values[index.end])
-        }
+            end: Number(values[index.end]),
+        };
         return true;
     }
 
-
+    public match(value: number): boolean {
+        if (this.range === null) {
+            throw new Error('Attempting to match range without setting using isValid first');
+        }
+        // If there is a step, match against that
+        if (typeof this.properties.step !== 'undefined' && value % this.properties.step !== 0) {
+            return false;
+        }
+        return value >= this.range.start && value <= this.range.end;
+    }
 }
