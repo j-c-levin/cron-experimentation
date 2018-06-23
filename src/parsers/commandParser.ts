@@ -12,7 +12,7 @@ export class CommandParser {
         }, '');
     }
 
-    public printCommand(): void {
-        console.log('command     ', this.command);
+    public getCommand(): string {
+        return this.command.trim();
     }
 }
