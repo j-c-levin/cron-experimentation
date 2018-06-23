@@ -61,7 +61,49 @@ describe('Range Matcher', () => {
         it('matches the start of the range', () => {
             const range = `${testProperties.minValue}-${testProperties.maxValue}`;
             testMatcher.isValid(range);
-            expect(testMatcher.match(1)).to.be.true;
+            expect(testMatcher.match(testProperties.minValue)).to.be.true;
+        });
+        it('matches the end of the range', () => {
+            const range = `${testProperties.minValue}-${testProperties.maxValue}`;
+            testMatcher.isValid(range);
+            expect(testMatcher.match(testProperties.maxValue)).to.be.true;
+        });
+        it('matches the middle of the range', () => {
+            const range = `${testProperties.minValue}-${testProperties.maxValue}`;
+            testMatcher.isValid(range);
+            const value = (testProperties.minValue + testProperties.maxValue) / 2;
+            expect(testMatcher.match(value)).to.be.true;
+        });
+        it('matches with an any', () => {
+            const range = `${testProperties.minValue}-*`;
+            testMatcher.isValid(range);
+            const value = (testProperties.minValue + testProperties.maxValue) / 2;
+            expect(testMatcher.match(value)).to.be.true;
+        });
+        it('matches with a step', () => {
+            const range = `${testProperties.minValue}-*/2`;
+            testMatcher.isValid(range);
+            const value = testProperties.minValue * 2;
+            expect(testMatcher.match(value)).to.be.true;
+        });
+        it('does not match if out of step', () => {
+            const range = `${testProperties.minValue}-*/2`;
+            testMatcher.isValid(range);
+            const value = (testProperties.minValue * 2) + 1;
+            expect(testMatcher.match(value)).to.be.false;
+        });
+        it('does not match before the start', () => {
+            const range = `${testProperties.minValue}-${testProperties.maxValue}`;
+            testMatcher.isValid(range);
+            expect(testMatcher.match(testProperties.minValue - 1)).to.be.false;
+        });
+        it('does not match after the end', () => {
+            const range = `${testProperties.minValue}-${testProperties.maxValue}`;
+            testMatcher.isValid(range);
+            expect(testMatcher.match(testProperties.maxValue + 1)).to.be.false;
+        });
+        it('throws if isValid() has not been called', () => {
+            expect(() => { testMatcher.match(testProperties.maxValue); }).to.throw('Attempting to match range without setting using isValid first');
         });
     });
 });
