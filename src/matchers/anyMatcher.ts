@@ -2,18 +2,18 @@ import { Matcher, MatcherProperties } from '../interfaces';
 import { StepMatcher } from './stepMatcher';
 
 const index = {
+    end: 1,
     start: 0,
-    end: 1
-}
+};
 
 export class AnyMatcher implements Matcher {
-    properties: MatcherProperties;
+    private properties: MatcherProperties;
 
     constructor(properties: MatcherProperties) {
         this.properties = properties;
     }
 
-    match(input: number): boolean {
+    public match(input: number): boolean {
         let step = true;
         if (typeof this.properties.step !== 'undefined') {
             step = input % this.properties.step === 0;
@@ -22,7 +22,7 @@ export class AnyMatcher implements Matcher {
         return match && step;
     }
 
-    isValid(input: string): boolean {
+    public isValid(input: string): boolean {
         const stepResponse = StepMatcher.parse(input);
         if (stepResponse.hasStep) {
             if (typeof stepResponse.mainValue === 'undefined' || typeof stepResponse.stepValue === 'undefined') {
