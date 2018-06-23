@@ -25,4 +25,4 @@ Building a flexible parser for a cron input string
 
 * ```npm run start */15 0 1,15 * 1-fri /usr/bin/find```
 
-![alt text](https://imgur.com/a/DYUWq6x "Example output")
+![Example Output](https://i.imgur.com/AgNyjd3.png "An image of a command prompt window displaying a successfully parsed cron string")
