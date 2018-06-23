@@ -16,6 +16,10 @@ http://man7.org/linux/man-pages/man5/crontab.5.html
 
 * Handle ```@yearly``` or other shorthand commands
 
+* There's a lot of repetition, potentially create a 'generic matcher' that handles all the common matches?
+
+* Handling steps and 'any' symbols are a bit thrown in at the moment, consider if there is a more abstracted way of breaking that down
+
 # Installing
 1) Download node
 
