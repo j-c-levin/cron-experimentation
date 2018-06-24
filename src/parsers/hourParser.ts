@@ -5,26 +5,30 @@ import { NumberMatcher } from '../matchers/numberMatcher';
 import { RangeMatcher } from '../matchers/rangeMatcher';
 
 export class HourParser implements Parser {
-    properties: MatcherProperties = {
+    public name = 'hour         ';
+    private properties: MatcherProperties = {
         minValue: 0,
-        maxValue: 23
-    }
-    name = 'hour         ';
-    value: Matcher;
-    children: Parser[] = [];
+        maxValue: 23,
+    };
+    private value: Matcher;
+    private children: Parser[] = [];
 
     constructor(input: string) {
         this.value = this.splitDataString(input);
     }
+    // Match either in this object or in any child objects
+    public match(input: number): boolean {
+        return this.value.match(input) || this.children.some((child) => child.match(input));
+    }
 
-    splitDataString(input: string): Matcher {
+    private splitDataString(input: string): Matcher {
 
         // Input is a list, must check this first for recursion to work
         if (input.includes(',')) {
             // Split into elements
             const list = input.split(',');
             // Create new Parsers recursively with the individual elements
-            list.forEach(element => {
+            list.forEach((element) => {
                 this.children.push(new HourParser(element));
             });
             return new NoMatcher();
@@ -50,10 +54,5 @@ export class HourParser implements Parser {
 
         // Input matches no known type, throw error
         throw new Error(`Input ${input} as a hour does not match any known type`);
-    }
-
-    // Match either in this object or in any child objects
-    match(input: number): boolean {
-        return this.value.match(input) || this.children.some(child => child.match(input));
     }
 }

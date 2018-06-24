@@ -1,116 +1,116 @@
-import { DayOfMonthParser } from './dayOfMonthParser';
 import { expect } from 'chai';
+import { HourParser } from './hourParser';
 
-describe('Day Of Month Parser', () => {
+describe('Hour Parser', () => {
     describe('constructor()', () => {
         it('creates with the minimum value', () => {
             expect(() => {
-                new DayOfMonthParser('1');
+                new HourParser('0');
             }).to.not.throw();
         });
         it('creates with the maximum value', () => {
             expect(() => {
-                new DayOfMonthParser('30');
+                new HourParser('23');
             }).to.not.throw();
         });
         it('creates in the middle of the range', () => {
             expect(() => {
-                new DayOfMonthParser('15');
+                new HourParser('15');
             }).to.not.throw();
         });
         it('errors below the minimum', () => {
             expect(() => {
-                new DayOfMonthParser('0');
+                new HourParser('-1');
             }).to.throw();
         });
         it('errors above the maximum', () => {
             expect(() => {
-                new DayOfMonthParser('32');
+                new HourParser('24');
             }).to.throw();
         });
         it('creates creates with a list', () => {
             expect(() => {
-                new DayOfMonthParser('1,2,3');
+                new HourParser('1,2,3');
             }).to.not.throw();
         });
         it('errors with a list out of range', () => {
             expect(() => {
-                new DayOfMonthParser('0,32');
+                new HourParser('-1,24');
             }).to.throw();
         });
         it('errors with a list both out and in range', () => {
             expect(() => {
-                new DayOfMonthParser('0,15,32');
+                new HourParser('0,15,32');
             }).to.throw();
         });
         it('creates with an any symbol', () => {
             expect(() => {
-                new DayOfMonthParser('*');
+                new HourParser('*');
             }).to.not.throw();
         });
         it('creates with a list with an any symbol', () => {
             expect(() => {
-                new DayOfMonthParser('1,5,*');
+                new HourParser('1,5,*');
             }).to.not.throw();
         });
         it('errors with a list with an any symbol that is out of range', () => {
             expect(() => {
-                new DayOfMonthParser('1,5,*,32');
+                new HourParser('1,5,*,32');
             }).to.throw();
         });
         it('errors with an unidentified symbol', () => {
             expect(() => {
-                new DayOfMonthParser('%');
+                new HourParser('%');
             }).to.throw();
         });
         it('errors with an unidentified symbol in a list', () => {
             expect(() => {
-                new DayOfMonthParser('1,5,%,*');
+                new HourParser('1,5,%,*');
             }).to.throw();
         });
         it('creates with a range', () => {
             expect(() => {
-                new DayOfMonthParser('1-15');
+                new HourParser('1-15');
             }).to.not.throw();
         });
         it('creates with a range and an any symbol', () => {
             expect(() => {
-                new DayOfMonthParser('1-*');
+                new HourParser('1-*');
             }).to.not.throw();
         });
         it('creates with a list and a range', () => {
             expect(() => {
-                new DayOfMonthParser('2,5-10,12');
+                new HourParser('2,5-10,12');
             }).to.not.throw();
         });
         it('creates with a list and a range and any symbol', () => {
             expect(() => {
-                new DayOfMonthParser('2,5-*,*');
+                new HourParser('2,5-*,*');
             }).to.not.throw();
         });
         it('creates with a step', () => {
             expect(() => {
-                new DayOfMonthParser('1-10/2');
+                new HourParser('1-10/2');
             }).to.not.throw();
         });
         it('creates with a step and any symbol in a range', () => {
             expect(() => {
-                new DayOfMonthParser('1-*/2');
+                new HourParser('1-*/2');
             }).to.not.throw();
         });
         it('creates with a step and any symbol in a list', () => {
             expect(() => {
-                new DayOfMonthParser('15,20-25/2,*');
+                new HourParser('15,20-23/2,*');
             }).to.not.throw();
         });
         it('creates with a step and any symbol', () => {
             expect(() => {
-                new DayOfMonthParser('*/10');
+                new HourParser('*/10');
             }).to.not.throw();
         });
         it('rejects a step without a range', () => {
             expect(() => {
-                new DayOfMonthParser('5/10');
+                new HourParser('5/10');
             }).to.throw();
         });
     });
