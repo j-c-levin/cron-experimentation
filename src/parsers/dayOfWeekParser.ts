@@ -11,30 +11,35 @@ const days: { [day: string]: string } = {
     wed: '3',
     thu: '4',
     fri: '5',
-    sat: '6'
-}
+    sat: '6',
+};
 
 export class DayOfWeekParser implements Parser {
-    properties: MatcherProperties = {
+    public name = 'day of week  ';
+    private properties: MatcherProperties = {
         minValue: 0,
-        maxValue: 7
-    }
-    name = 'day of week  ';
-    value: Matcher;
-    children: Parser[] = [];
+        maxValue: 7,
+    };
+    private value: Matcher;
+    private children: Parser[] = [];
 
     constructor(input: string) {
         this.value = this.splitDataString(input);
     }
 
-    splitDataString(input: string): Matcher {
+    // Match either in this object or in any child objects
+    public match(input: number): boolean {
+        return this.value.match(input) || this.children.some((child) => child.match(input));
+    }
+
+    private splitDataString(input: string): Matcher {
 
         // Input is a list, must check this first for recursion to work
         if (input.includes(',')) {
             // Split into elements
             const list = input.split(',');
             // Create new Parsers recursively with the individual elements
-            list.forEach(element => {
+            list.forEach((element) => {
                 this.children.push(new DayOfWeekParser(element));
             });
             // Matching will be handled by the children
@@ -66,7 +71,7 @@ export class DayOfWeekParser implements Parser {
         throw new Error(`Input ${input} as a day of week does not match any known type`);
     }
 
-    parseMonthString(input: string): string {
+    private parseMonthString(input: string): string {
         // If input is a range, deal with each side separately
         if (input.includes('-')) {
             const split = input.split('-').map((half, index) => {
@@ -84,15 +89,10 @@ export class DayOfWeekParser implements Parser {
             return input;
         }
         // Input is a string, check if it matches
-        const conversion = (input.includes('/')) ? `${days[input.split('/')[0].toLowerCase()]}/${input.split('/')[1]}` : days[input.toLowerCase()]
+        const conversion = (input.includes('/')) ? `${days[input.split('/')[0].toLowerCase()]}/${input.split('/')[1]}` : days[input.toLowerCase()];
         if (typeof conversion === 'undefined') {
             throw new Error(`Day of week input ${input} does not match to a known day of the week`);
         }
         return conversion;
-    }
-
-    // Match either in this object or in any child objects
-    match(input: number): boolean {
-        return this.value.match(input) || this.children.some(child => child.match(input));
     }
 }

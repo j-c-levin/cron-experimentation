@@ -20,6 +20,10 @@ export class RangeMatcher implements Matcher {
             return false;
         }
         const values = value.split('-');
+        if (values.length < 2) {
+            throw new Error(`Negative numbers are not valid input`);
+        }
+        // console.log(values);
         if (values.length > 2) {
             throw new Error(`Invalid range ${value}, there must not be any negative numbers`);
         }
