@@ -1,14 +1,14 @@
-export interface Matcher {
+export interface IMatcher {
     match(input: number): boolean;
     isValid(input: string): boolean;
 }
 
-export interface Parser {
+export interface IParser {
     name: string;
     match(input: number): boolean;
 }
 
-export interface MatcherProperties {
+export interface IMatcherProperties {
     minValue: number;
     maxValue: number;
     step?: number;

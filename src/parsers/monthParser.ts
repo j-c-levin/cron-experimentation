@@ -1,4 +1,4 @@
-import { Matcher, MatcherProperties, Parser } from '../interfaces';
+import { IMatcher, IMatcherProperties, IParser } from '../interfaces';
 import { AnyMatcher } from '../matchers/anyMatcher';
 import { NoMatcher } from '../matchers/noMatcher';
 import { NumberMatcher } from '../matchers/numberMatcher';
@@ -19,14 +19,14 @@ const months: { [month: string]: string } = {
     dec: '12',
 };
 
-export class MonthParser implements Parser {
+export class MonthParser implements IParser {
     public name = 'month        ';
-    private properties: MatcherProperties = {
+    private properties: IMatcherProperties = {
         minValue: 1,
         maxValue: 12,
     };
-    private value: Matcher = new NoMatcher();
-    private children: Parser[] = [];
+    private value: IMatcher = new NoMatcher();
+    private children: IParser[] = [];
 
     constructor(input: string) {
         this.value = this.splitDataString(input);
@@ -37,7 +37,7 @@ export class MonthParser implements Parser {
         return this.value.match(input) || this.children.some((child) => child.match(input));
     }
 
-    private splitDataString(input: string): Matcher {
+    private splitDataString(input: string): IMatcher {
 
         // Input is a list, must check this first for recursion to work
         if (input.includes(',')) {

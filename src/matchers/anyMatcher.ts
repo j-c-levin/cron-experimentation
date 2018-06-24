@@ -1,4 +1,4 @@
-import { Matcher, MatcherProperties } from '../interfaces';
+import { IMatcher, IMatcherProperties } from '../interfaces';
 import { StepMatcher } from './stepMatcher';
 
 const index = {
@@ -6,10 +6,10 @@ const index = {
     start: 0,
 };
 
-export class AnyMatcher implements Matcher {
-    private properties: MatcherProperties;
+export class AnyMatcher implements IMatcher {
+    private properties: IMatcherProperties;
 
-    constructor(properties: MatcherProperties) {
+    constructor(properties: IMatcherProperties) {
         this.properties = properties;
     }
 

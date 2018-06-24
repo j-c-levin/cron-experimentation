@@ -1,4 +1,4 @@
-import { Matcher, MatcherProperties, Parser } from '../interfaces';
+import { IMatcher, IMatcherProperties, IParser } from '../interfaces';
 import { AnyMatcher } from '../matchers/anyMatcher';
 import { NoMatcher } from '../matchers/noMatcher';
 import { NumberMatcher } from '../matchers/numberMatcher';
@@ -14,14 +14,14 @@ const days: { [day: string]: string } = {
     sat: '6',
 };
 
-export class DayOfWeekParser implements Parser {
+export class DayOfWeekParser implements IParser {
     public name = 'day of week  ';
-    private properties: MatcherProperties = {
+    private properties: IMatcherProperties = {
         minValue: 0,
         maxValue: 7,
     };
-    private value: Matcher;
-    private children: Parser[] = [];
+    private value: IMatcher;
+    private children: IParser[] = [];
 
     constructor(input: string) {
         this.value = this.splitDataString(input);
@@ -32,7 +32,7 @@ export class DayOfWeekParser implements Parser {
         return this.value.match(input) || this.children.some((child) => child.match(input));
     }
 
-    private splitDataString(input: string): Matcher {
+    private splitDataString(input: string): IMatcher {
 
         // Input is a list, must check this first for recursion to work
         if (input.includes(',')) {
@@ -91,7 +91,7 @@ export class DayOfWeekParser implements Parser {
             parsedInput = input.split('/')[0];
             step = input.split('/')[1];
         }
-        
+
         // Is input a number or any
         if (isNaN(Number(parsedInput)) === false || parsedInput.includes('*')) {
             // Input is a number or any, doesn't need to be parser
