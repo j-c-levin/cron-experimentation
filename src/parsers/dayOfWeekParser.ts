@@ -47,7 +47,7 @@ export class DayOfWeekParser implements Parser {
         }
 
         // Parse days into numbers
-        input = this.parseMonthString(input);
+        input = this.parseDayString(input);
 
         // Input is a range
         const rangeMatcher = new RangeMatcher(this.properties);
@@ -71,7 +71,7 @@ export class DayOfWeekParser implements Parser {
         throw new Error(`Input ${input} as a day of week does not match any known type`);
     }
 
-    private parseMonthString(input: string): string {
+    private parseDayString(input: string): string {
         // If input is a range, deal with each side separately
         if (input.includes('-')) {
             const split = input.split('-').map((half, index) => {
@@ -79,20 +79,29 @@ export class DayOfWeekParser implements Parser {
                 if (half.toLowerCase() === 'sun') {
                     return (index === 0) ? '0' : '7';
                 }
-                return this.parseMonthString(half);
+                return this.parseDayString(half);
             });
             return split.join('-');
         }
+
+        let parsedInput = input;
+        let step = '';
+        // Input is a step
+        if (input.includes('/')) {
+            parsedInput = input.split('/')[0];
+            step = input.split('/')[1];
+        }
         // Is input a number or any
-        if (isNaN(Number(input)) === false || input.includes('*')) {
+        if (isNaN(Number(parsedInput)) === false || parsedInput.includes('*')) {
             // Input is a number or any, doesn't need to be parser
             return input;
         }
+
         // Input is a string, check if it matches
-        const conversion = (input.includes('/')) ? `${days[input.split('/')[0].toLowerCase()]}/${input.split('/')[1]}` : days[input.toLowerCase()];
+        const conversion = days[parsedInput.toLowerCase()];
         if (typeof conversion === 'undefined') {
             throw new Error(`Day of week input ${input} does not match to a known day of the week`);
         }
-        return conversion;
+        return conversion + step;
     }
 }

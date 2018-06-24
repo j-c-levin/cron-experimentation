@@ -113,5 +113,10 @@ describe('Day Of Month Parser', () => {
                 new DayOfWeekParser('5/10');
             }).to.throw();
         });
+        it('accepts monday as input', () => {
+            expect(() => {
+                new DayOfWeekParser('mon');
+            }).to.throw();
+        });
     });
 });

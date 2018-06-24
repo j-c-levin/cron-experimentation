@@ -34,7 +34,7 @@ describe('Range Matcher', () => {
         });
         it('throws on a negative number', () => {
             const range = `-1-${testProperties.maxValue}`;
-            expect(() => { testMatcher.isValid(range); }).to.throw('Invalid range element  in -1');
+            expect(() => { testMatcher.isValid(range); }).to.throw(`Invalid range -1-${testProperties.maxValue}, there must not be any negative numbers`);
         });
         it('throws on a negative number', () => {
             const range = `-1`;
