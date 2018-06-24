@@ -1,4 +1,4 @@
-import { DayOfWeekParser } from './DayOfWeekParser';
+import { DayOfWeekParser } from './dayOfWeekParser';
 import { expect } from 'chai';
 
 describe('Day Of Week Parser', () => {
