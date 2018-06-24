@@ -83,16 +83,26 @@ export class MonthParser implements Parser {
             });
             return split.join('-');
         }
+
+        let parsedInput = input;
+        let step = '';
+        // Input is a step
+        if (input.includes('/')) {
+            parsedInput = input.split('/')[0];
+            step = input.split('/')[1];
+        }
+
         // Is input a number or any
-        if (isNaN(Number(input)) === false || input.includes('*')) {
+        if (isNaN(Number(parsedInput)) === false || parsedInput.includes('*')) {
             // Input is a number or any, doesn't need to be parser
             return input;
         }
+
         // Input is a string, check if it matches
-        const conversion = (input.includes('/')) ? `${months[input.split('/')[0].toLowerCase()]}/${input.split('/')[1]}` : months[input.toLowerCase()];
+        const conversion = months[parsedInput.toLowerCase()];
         if (typeof conversion === 'undefined') {
             throw new Error(`Month input ${input} does not match to a known month`);
         }
-        return conversion;
+        return conversion + step;
     }
 }

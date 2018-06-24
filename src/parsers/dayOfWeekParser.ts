@@ -91,6 +91,7 @@ export class DayOfWeekParser implements Parser {
             parsedInput = input.split('/')[0];
             step = input.split('/')[1];
         }
+        
         // Is input a number or any
         if (isNaN(Number(parsedInput)) === false || parsedInput.includes('*')) {
             // Input is a number or any, doesn't need to be parser
