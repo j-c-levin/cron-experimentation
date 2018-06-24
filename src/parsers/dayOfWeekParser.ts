@@ -14,7 +14,7 @@ const days: { [day: string]: string } = {
     sat: '6',
 };
 
-export class DayOfWeekParser  implements IParser {
+export class DayOfWeekParser implements IParser {
     public name = 'day of week  ';
     private properties: IMatcherProperties = {
         minValue: 0,
