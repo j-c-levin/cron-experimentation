@@ -1,7 +1,7 @@
 import { DayOfWeekParser } from './DayOfWeekParser';
 import { expect } from 'chai';
 
-describe('Day Of Month Parser', () => {
+describe('Day Of Week Parser', () => {
     describe('constructor()', () => {
         it('creates with the minimum value', () => {
             expect(() => {
@@ -113,9 +113,74 @@ describe('Day Of Month Parser', () => {
                 new DayOfWeekParser('5/10');
             }).to.throw();
         });
-        it('accepts monday as input', () => {
+        it('accepts mon as input', () => {
             expect(() => {
                 new DayOfWeekParser('mon');
+            }).to.not.throw();
+        });
+        it('accepts tue as input', () => {
+            expect(() => {
+                new DayOfWeekParser('tue');
+            }).to.not.throw();
+        });
+        it('accepts wed as input', () => {
+            expect(() => {
+                new DayOfWeekParser('wed');
+            }).to.not.throw();
+        });
+        it('accepts thu as input', () => {
+            expect(() => {
+                new DayOfWeekParser('thu');
+            }).to.not.throw();
+        });
+        it('accepts fri as input', () => {
+            expect(() => {
+                new DayOfWeekParser('fri');
+            }).to.not.throw();
+        });
+        it('accepts sat as input', () => {
+            expect(() => {
+                new DayOfWeekParser('sat');
+            }).to.not.throw();
+        });
+        it('accepts sun as input', () => {
+            expect(() => {
+                new DayOfWeekParser('sun');
+            }).to.not.throw();
+        });
+        it('errors on non-day used', () => {
+            expect(() => {
+                new DayOfWeekParser('jan');
+            }).to.throw();
+        });
+        it('accepts a range of days as input', () => {
+            expect(() => {
+                new DayOfWeekParser('mon-wed');
+            }).to.not.throw();
+        });
+        it('accepts a range of days and any symbols as input', () => {
+            expect(() => {
+                new DayOfWeekParser('mon-*');
+            }).to.not.throw();
+        });
+        it('accepts a range of days and numbers as input', () => {
+            expect(() => {
+                new DayOfWeekParser('mon-5');
+            }).to.not.throw();
+        });
+        it('accepts a range of days and numbers in a list as input', () => {
+            expect(() => {
+                new DayOfWeekParser('mon-5,7');
+            }).to.not.throw();
+        });
+        it('errors on non-day used in a list', () => {
+            expect(() => {
+                new DayOfWeekParser('jan, mon');
+            }).to.throw();
+        });
+        it('errors on non-day used in a range', () => {
+            expect(() => {
+                new DayOfWeekParser('tue-far');
             }).to.throw();
         });
     });
