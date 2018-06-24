@@ -1,11 +1,15 @@
-export interface Matcher {
-    match(value: Number): boolean;
-    isValid(value: string): boolean;
+export interface IMatcher {
+    match(input: number): boolean;
+    isValid(input: string): boolean;
 }
-export interface Parser {
-    match(value: Number): boolean;
+
+export interface IParser {
+    name: string;
+    match(input: number): boolean;
 }
-export interface MatcherProperties {
-    minValue: Number;
-    maxValue: Number;
+
+export interface IMatcherProperties {
+    minValue: number;
+    maxValue: number;
+    step?: number;
 }

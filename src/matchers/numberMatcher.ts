@@ -1,14 +1,19 @@
-import { Matcher, MatcherProperties } from "../interfaces";
+import { IMatcher, IMatcherProperties } from "../interfaces";
 
-export class NumberMatcher implements Matcher {
-    properties: MatcherProperties
-    value: Number | null = null;
+const index = {
+    end: 1,
+    start: 0,
+};
 
-    constructor(properties: MatcherProperties) {
+export class NumberMatcher implements IMatcher {
+    private properties: IMatcherProperties;
+    private value: number | null = null;
+
+    constructor(properties: IMatcherProperties) {
         this.properties = properties;
     }
 
-    isValid(input: string): boolean {
+    public isValid(input: string): boolean {
         // Input does not parse to a number
         if (isNaN(Number(input))) {
             return false;
@@ -25,7 +30,7 @@ export class NumberMatcher implements Matcher {
         return true;
     }
 
-    match(input: number): boolean {
+    public match(input: number): boolean {
         return input === this.value;
     }
 }
