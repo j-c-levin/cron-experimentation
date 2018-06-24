@@ -39,4 +39,4 @@ parsers.forEach((parser) => {
 });
 
 // Print out the command at the end
-console.log('command       ', new CommandParser(args, index.command).getCommand());
+console.log('command      ', new CommandParser(args, index.command).getCommand());
