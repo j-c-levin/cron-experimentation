@@ -18,7 +18,9 @@ http://man7.org/linux/man-pages/man5/crontab.5.html
 
 * There's a lot of repetition, potentially create a 'generic matcher' that handles all the common matches?
 
-* Handling steps and 'any' symbols are a bit thrown in at the moment, consider if there is a more abstracted way of breaking that down
+* Handling steps and 'any' symbols are a bit thrown in at the moment, consider if there is a more abstracted way of breaking that down.
+
+* There's a lot of repetition in some of the straight number parsers, could make this a more abstracted class that is inherited.
 
 # Installing
 1) Download node
