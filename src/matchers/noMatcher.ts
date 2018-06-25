@@ -1,6 +1,6 @@
 import { IMatcher } from "../interfaces";
 
-// The default matcher for parser classes, does not match anything
+// A utility matcher that never matches, used for when matching is intended to be handled by child matchers
 export class NoMatcher implements IMatcher {
 
     public match(): boolean {

@@ -5,6 +5,7 @@ describe('Range Matcher', () => {
     let testMatcher: RangeMatcher;
     const testProperties = { minValue: 1, maxValue: 100 };
     beforeEach(() => {
+        // Stringify then parse is used to prevent tests from modifying the testProperties object
         testMatcher = new RangeMatcher(JSON.parse(JSON.stringify(testProperties)));
     });
     describe('isValid()', () => {

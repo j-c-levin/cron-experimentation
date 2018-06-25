@@ -1,11 +1,6 @@
 import { IMatcher, IMatcherProperties } from '../interfaces';
 import { StepMatcher } from './stepMatcher';
 
-const index = {
-    end: 1,
-    start: 0,
-};
-
 export class AnyMatcher implements IMatcher {
     private properties: IMatcherProperties;
 
@@ -15,6 +10,7 @@ export class AnyMatcher implements IMatcher {
 
     public match(input: number): boolean {
         let step = true;
+        // If a step has been specified, test if the input is a multiple
         if (typeof this.properties.step !== 'undefined') {
             step = input % this.properties.step === 0;
         }

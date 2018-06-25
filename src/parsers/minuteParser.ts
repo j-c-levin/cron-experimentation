@@ -10,7 +10,7 @@ export class MinuteParser implements IParser {
         minValue: 0,
         maxValue: 59,
     };
-    private value: IMatcher = new NoMatcher();
+    private value: IMatcher;
     private children: IParser[] = [];
 
     constructor(input: string) {

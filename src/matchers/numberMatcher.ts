@@ -1,10 +1,5 @@
 import { IMatcher, IMatcherProperties } from "../interfaces";
 
-const index = {
-    end: 1,
-    start: 0,
-};
-
 export class NumberMatcher implements IMatcher {
     private properties: IMatcherProperties;
     private value: number | null = null;

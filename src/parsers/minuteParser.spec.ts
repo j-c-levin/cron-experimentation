@@ -1,5 +1,6 @@
 import { expect } from 'chai';
 import { MinuteParser } from './minuteParser';
+
 describe('Minute Parser', () => {
     describe('constructor()', () => {
         it('creates with the minimum value', () => {

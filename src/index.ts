@@ -5,7 +5,7 @@ import { HourParser } from './parsers/hourParser';
 import { MinuteParser } from './parsers/minuteParser';
 import { MonthParser } from './parsers/monthParser';
 
-const maxParserNumber = 60;
+// Index for command line arguments
 const index = {
     minute: 2,
     hour: 3,
@@ -28,9 +28,10 @@ const parsers = [
 ];
 
 // Print out result
+const maxTestNumber = 60;
 parsers.forEach((parser) => {
     let message = parser.name;
-    for (let i = 0; i < maxParserNumber; i++) {
+    for (let i = 0; i < maxTestNumber; i++) {
         if (parser.match(i)) {
             message += ` ${i}`;
         }

@@ -8,13 +8,13 @@ Building a flexible parser for a cron input string
 
 # Parser scope
 
-This parser implements all the basic inputs for a cron format following the linux specification:
+This parser implements the basic inputs for a cron string in the format following the linux specification:
 
 http://man7.org/linux/man-pages/man5/crontab.5.html
 
 ### Future work
 
-* Handle ```@yearly``` or other shorthand commands
+* Handle ```@yearly``` or other shorthand commands.
 
 * There's a lot of repetition, potentially create a 'generic matcher' that handles all the common matches?
 

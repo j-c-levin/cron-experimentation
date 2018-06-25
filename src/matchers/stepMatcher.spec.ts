@@ -1,5 +1,6 @@
 import { expect } from 'chai';
-import { StepMatcher, IStepResponse } from './stepMatcher';
+import { StepMatcher } from './stepMatcher';
+import { IStepResponse } from '../interfaces';
 
 describe('Step Matcher', () => {
     describe('parse()', () => {

@@ -25,7 +25,7 @@ export class MonthParser implements IParser {
         minValue: 1,
         maxValue: 12,
     };
-    private value: IMatcher = new NoMatcher();
+    private value: IMatcher;
     private children: IParser[] = [];
 
     constructor(input: string) {

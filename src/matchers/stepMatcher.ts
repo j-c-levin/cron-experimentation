@@ -1,13 +1,9 @@
+import { IStepResponse } from "../interfaces";
+
 const index = {
     start: 0,
     end: 1,
 };
-
-export interface IStepResponse {
-    hasStep: boolean;
-    stepValue?: number;
-    mainValue?: string;
-}
 
 export class StepMatcher {
     public static parse(input: string): IStepResponse {
