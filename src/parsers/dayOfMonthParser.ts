@@ -3,6 +3,8 @@ import { AnyMatcher } from '../matchers/anyMatcher';
 import { NoMatcher } from '../matchers/noMatcher';
 import { NumberMatcher } from '../matchers/numberMatcher';
 import { RangeMatcher } from '../matchers/rangeMatcher';
+import { DayOfWeekParser } from './dayOfWeekParser';
+import { ListMatcher } from '../matchers/listMatcher';
 
 export class DayOfMonthParser implements IParser {
     public name = 'day of month ';
@@ -25,14 +27,9 @@ export class DayOfMonthParser implements IParser {
     private splitDataString(input: string): IMatcher {
 
         // Input is a list, must check this first for recursion to work
-        if (input.includes(',')) {
-            // Split into elements
-            const list = input.split(',');
-            // Create new Parsers recursively with the individual elements
-            list.forEach((element) => {
-                this.children.push(new DayOfMonthParser(element));
-            });
-            // Matching will be handled by the children
+        const listMatcher = new ListMatcher();
+        if (listMatcher.isValid(input)) {
+            this.children = listMatcher.getListChildren(DayOfMonthParser);
             return new NoMatcher();
         }
 

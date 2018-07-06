@@ -1,6 +1,7 @@
 export interface IMatcher {
-    match(input: number): boolean;
+    match(input: number | string): boolean;
     isValid(input: string): boolean;
+    getListChildren?(classType: any): IParser[];
 }
 
 export interface IParser {
